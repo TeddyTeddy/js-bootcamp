@@ -1,9 +1,9 @@
 // REMEMBER: You can't define a variable twice
 // in the SAME scope, but if the variable is in 
-// different scope, that is ok.
+// different scope, that is ok (with const and let)
 
 // VARIABLE SHADOWING: A variable in a local scope
-// uses its value instead of variable in a parent's scope.
+// uses its value instead of variable with the same name in a parent's scope.
 
 // Global (name=Andrew)
   // local (name=Mike)
@@ -21,7 +21,7 @@ if(true) {
 }
 
 if(true) {
-    console.log(name)
+    console.log(name) // Andrew
 }
 
 // Leaked Global Example!

@@ -29,12 +29,12 @@ if(true) { // code block
 console.log(varTwo)
 
 // JS uses LEXICAL SCOPING, which limits the usage of a variable
-// based on where the variable is defined
+// based on where the variable is defined.
 // In order to understand the LEXICAL SCOPING in JS, we need to learn about
 // CODE BLOCK -> LOCAL SCOPE -> GLOBAL SCOPE and SCOPE TREE
 // A CODE BLOCK is created by {}, and it forms automatically a local scope,
 // A LOCAL SCOPE is an area in the program designated by {}, in which
-// we can define variables. Variables defined in local scope are called
+// we can define variables with const/let keywords. Variables defined in local scope are called
 // LOCAL VARIABLEs.
 // In the example above we have 'varTwo' as the local variable
 // A GLOBAL SCOPE is an area in the program, which is defined outside of all
@@ -46,7 +46,7 @@ console.log(varTwo)
 // Global Scope (varOne : Global Variable)
 //     Local Scope (varTwo : Local variable)
 // Now, LEXICAL SCOPING (Sozcuk kapsami) states that
-// in a scope, variables defined in that scope is accessible as well as 
+// in a scope, variables (with const/let) defined in that scope is accessible as well as 
 // all the parent/ancestor scopes' variables
 // That's why line 26 work (i.e. varTwo is accessible in the local scope only)
 // and line 29 won't (i.e. line 29 is in global scope, which only has varOne )
