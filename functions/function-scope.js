@@ -5,7 +5,7 @@
 let convertFahrenheitToCelsius = function(fahrenheit) {
     let celsius = (fahrenheit - 32) * 5/9
     if(celsius <= 0) {
-        let is Freezing = true
+        let isFreezing = true
     }
     return celsius
 }
