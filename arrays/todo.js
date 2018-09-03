@@ -18,3 +18,8 @@ console.log(todos)
 todos.forEach(function(todo, index) {
     console.log(`${index+1}. ${todo}`)
 })
+
+// CHALLANGE AREA
+for(let index = 0; index < todos.length; ++index) {
+    console.log(`${index+1}. ${todos[index]}`)
+}

@@ -36,3 +36,24 @@ console.log(notes)
 notes.forEach(function( item, index ) {
     console.log(index, item)
 })
+
+// Counting 1, 2, 3..
+// configuration details goes inside for paranthesis
+// the first is initializer
+// the second is a condition
+// the third is the final expression
+for(let count = 0; count < 3; ++count) { // count var is scoped locally!
+    console.log(`Counting ${count + 1}`)
+}
+
+for(let count = 2; count >= 0; --count) { // count var is scoped locally!
+    console.log(`Counting ${count + 1}`)
+}
+
+for(let count = 0; count < notes.length; ++count) {
+    console.log(notes[count])
+}
+
+for(let count = notes.length - 1; count >= 0; --count) {
+    console.log(notes[count])
+}
