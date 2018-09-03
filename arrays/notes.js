@@ -31,3 +31,8 @@ console.log(notes)
 notes[1] = 'Note 2'
 notes[2] = 'Note 3'
 console.log(notes)
+
+
+notes.forEach(function( item, index ) {
+    console.log(index, item)
+})
