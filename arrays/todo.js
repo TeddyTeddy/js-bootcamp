@@ -15,6 +15,22 @@ const todos = [{
     completed: true
 }]
 
+const sortTodos = function(todos) {
+    todos.sort(function(a, b) {
+        if(!a.completed && b.completed) {
+            return -1 // a < b
+        } else if(!b.completed && a.completed) {
+            return 1 // b < a
+        } else {
+            return 0 // a === b
+        }
+    })
+}
+
+sortTodos(todos)
+console.log(todos)
+
+
 const deleteTodo = function(todos, todoText) {
     const index = todos.findIndex(function(todo) {
         return todo.text.toLowerCase() === todoText.toLowerCase()
