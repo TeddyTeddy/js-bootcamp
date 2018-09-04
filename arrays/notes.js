@@ -15,6 +15,23 @@ const findNote = function(notes, noteTitle) {
     }) // if no match find() returns undefined
 }
 
+const findNotes = function( notes, searchText ) {
+    return notes.filter(function(note) {
+        const isTitleMatch = note.title.toLowerCase().includes(searchText.toLowerCase())
+        const isBodyMatch = note.body.toLowerCase().includes(searchText.toLowerCase())
+        return isTitleMatch || isBodyMatch
+    })
+}
+
+const filteredNotes_2 = findNotes(notes, 'eating')
+console.log(filteredNotes_2)
+
+const filteredNotes = notes.filter(function(note, index) {
+    const isTitleMatch = note.title.toLowerCase().includes('office')
+    const isBodyMatch = note.body.toLowerCase().includes('office')
+    return isTitleMatch || isBodyMatch
+})
+console.log(filteredNotes)
 // const findNote = function(notes, noteTitle) {
 //     const index = notes.findIndex(function(note, index) {
 //         return note.title.toLowerCase() === noteTitle.toLowerCase() // case insensitive search

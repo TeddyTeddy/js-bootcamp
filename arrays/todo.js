@@ -24,8 +24,16 @@ const deleteTodo = function(todos, todoText) {
     }
 }
 
-deleteTodo(todos, 'buy food!')
-console.log(todos)
+const getThingsTodo = function(todos) {
+    return todos.filter(function(todo) {
+        return !todo.completed
+    })
+}
+
+console.log(getThingsTodo(todos))
+
+// deleteTodo(todos, 'buy food!')
+// console.log(todos)
 
 
 // const todos = ['Order cat food', 'Clean kitchen', 'Buy food', 'Do work', 'Exercise']
