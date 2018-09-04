@@ -1,4 +1,4 @@
-const notes = [{},{
+const notes = [{
     title: 'My next trip',
     body: 'I would like to go to Spain'
 }, {
@@ -9,20 +9,36 @@ const notes = [{},{
     body: 'Get a new seat'
 }]
 
-console.log(notes.length)
-console.log(notes)
-console.log('notes.indexOf({})', notes.indexOf({})) // -1, coz indexOf uses === operator
-console.log('notes.indexOf(notes[0])', notes.indexOf(notes[0])) // 0
-console.log('{} === {}', {} === {}) // false
-let someObject = {}
-let otherObject = someObject
-console.log('someObject === otherObject', someObject === otherObject) // true
+const findNote = function(notes, noteTitle) {
+    return notes.find(function(note, index) {
+        return note.title.toLowerCase() === noteTitle.toLowerCase() // case insensitive search
+    }) // if no match find() returns undefined
+}
 
-const index = notes.findIndex(function(note, index){
-    console.log(note)
-    return note.title === 'Habbits to work on'
-})
-console.log(index)
+// const findNote = function(notes, noteTitle) {
+//     const index = notes.findIndex(function(note, index) {
+//         return note.title.toLowerCase() === noteTitle.toLowerCase() // case insensitive search
+//     })
+//     return notes[index] // if -1, returns undefined
+// }
+
+const note = findNote(notes, 'office modification') // case insensitive search
+console.log(note)
+
+// console.log(notes.length)
+// console.log(notes)
+// console.log('notes.indexOf({})', notes.indexOf({})) // -1, coz indexOf uses === operator
+// console.log('notes.indexOf(notes[0])', notes.indexOf(notes[0])) // 0
+// console.log('{} === {}', {} === {}) // false
+// let someObject = {}
+// let otherObject = someObject
+// console.log('someObject === otherObject', someObject === otherObject) // true
+
+// const index = notes.findIndex(function(note, index){
+//     console.log(note)
+//     return note.title === 'Habbits to work on'
+// })
+// console.log(index)
 
 // console.log(notes.length)
 // console.log(notes[0]) // 'Note 1'
