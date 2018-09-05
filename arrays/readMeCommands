@@ -1,0 +1,2 @@
+// how to install live server via NPM?
+npm install -g live-server
