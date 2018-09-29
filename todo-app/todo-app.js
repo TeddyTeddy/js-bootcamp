@@ -37,3 +37,8 @@ todos.forEach(function(todo) {
 document.querySelector('#add-todo').addEventListener('click', function(e) {
     e.target.textContent = 'button clicked'
 })
+
+// listen for keystorekes in #new-todo-text input element
+document.querySelector('#new-todo-text').addEventListener('input', function(e) {
+    console.log(e.target.value)
+})
