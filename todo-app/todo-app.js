@@ -22,13 +22,16 @@ const todos = [{
 // 5. at input event, update the filter and renderTodos with the new filter
 
 const filters = {
-    searchText: ''
+    searchText: '',
+    hideCompleted: false
 }
 
 const renderTodos = function(todos, filters) {
     // get filtered todos, case insensitive filtering
     const filteredTodos = todos.filter(function(todo) {
-        return todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const containsSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const hideTodo = filters.hideCompleted && todo.completed 
+        return containsSearchText && !hideTodo
     })
 
     // render 'You have 2 todos left'
@@ -70,4 +73,15 @@ document.querySelector('#new-todo').addEventListener('submit', function(e) {
     })
     renderTodos(todos, filters)
     e.target.elements.newTodoInput.value = ''
+})
+
+// 1. Add a checkbox with Hide Completed, the default value false
+// 2. Add filters.hideCompleted as default value false
+// 3. Listen for the checkbox change event
+//     - Update filters.hideCompleted with the value from the checkbox
+//     - call RenderTodos() with the updated filters
+// 4. Update renderTodos function to use filters.hideCompleted
+document.querySelector('#hide-completed').addEventListener('change', function(e) {
+    filters.hideCompleted = e.target.checked
+    renderTodos(todos, filters)
 })
