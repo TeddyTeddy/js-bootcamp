@@ -1,43 +1,8 @@
-let todos = []
-const todosJSON = localStorage.getItem('todos')
-if(todosJSON) {
-    todos = JSON.parse(todosJSON)
-}
+const todos = getSavedTodos()
 
 const filters = {
     searchText: '',
     hideCompleted: false
-}
-
-const renderTodos = function(todos, filters) {
-    // get filtered todos, case insensitive filtering
-    const filteredTodos = todos.filter(function(todo) {
-        const containsSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
-        const hideTodo = filters.hideCompleted && todo.completed 
-        return containsSearchText && !hideTodo
-    })
-
-    // render 'You have 2 todos left'
-    let count = 0
-    filteredTodos.forEach(function(todo) {
-        if(!todo.completed) {
-            ++count
-        }
-    })
-
-    // clear old summary
-    document.querySelector('#todos').innerHTML = ''
-
-    const summary = document.createElement('h2')
-    summary.textContent = `You have ${count} todo(s) left`   
-    document.querySelector('#todos').appendChild(summary)
-
-    // Render filtered todos
-    filteredTodos.forEach(function(todo) {
-        const p = document.createElement('p')
-        p.textContent = todo.text
-        document.querySelector('#todos').appendChild(p)
-    })    
 }
 
 renderTodos(todos, filters)
@@ -54,7 +19,7 @@ document.querySelector('#new-todo').addEventListener('submit', function(e) {
         text: e.target.elements.newTodoInput.value,
         completed: false
     })
-    localStorage.setItem('todos', JSON.stringify(todos))
+    saveTodos(todos)
     renderTodos(todos, filters)
     e.target.elements.newTodoInput.value = ''
 })

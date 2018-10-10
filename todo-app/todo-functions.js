@@ -1,0 +1,64 @@
+// get saved todos from local storage
+const getSavedTodos = function() {
+    const todosJSON = localStorage.getItem('todos')
+    if(todosJSON) {
+        return JSON.parse(todosJSON)
+    } else {
+        return []
+    }
+}
+
+const saveTodos = function(todos) {
+    localStorage.setItem('todos', JSON.stringify(todos))    
+}
+
+const getFilteredTodos = function(todos, filters) {
+    const filteredTodos = todos.filter(function(todo) {
+        const containsSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const hideTodo = filters.hideCompleted && todo.completed 
+        return containsSearchText && !hideTodo
+    })
+    return filteredTodos
+}
+
+const getIncompleteTodoCount = function(filteredTodos) {
+    let count = 0
+    filteredTodos.forEach(function(todo) {
+        if(!todo.completed) {
+            ++count
+        }
+    })
+    return count
+}
+
+const generateSummaryDOM = function(count) {
+    const summaryDOM = document.createElement('h2')
+    summaryDOM.textContent = `You have ${count} todo(s) left`
+    return summaryDOM
+}
+
+const generateTodoDOM = function(todo) {
+    const todoDOM = document.createElement('p')
+    todoDOM.textContent = todo.text
+    return todoDOM
+}
+
+// render todos
+const renderTodos = function(todos, filters) {
+    // get filtered todos, case insensitive filtering
+    const filteredTodos = getFilteredTodos(todos, filters)
+
+    // render 'You have 2 todos left'
+    const count = getIncompleteTodoCount(filteredTodos)
+
+    // clear old summary
+    document.querySelector('#todos').innerHTML = ''
+    const summaryDOM = generateSummaryDOM(count)
+    document.querySelector('#todos').appendChild(summaryDOM)
+
+    // Render filtered todos
+    filteredTodos.forEach(function(todo) {
+        const todoDOM = generateTodoDOM(todo)
+        document.querySelector('#todos').appendChild(todoDOM)
+    })    
+}
