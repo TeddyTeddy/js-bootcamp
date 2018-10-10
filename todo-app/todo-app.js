@@ -1,25 +1,8 @@
-const todos = [{
-    text: 'Order cat food',
-    completed: true
-}, {
-    text: 'Clean kitchen',
-    completed: false
-}, {
-    text: 'Buy food',
-    completed: true
-}, {
-    text: 'Do work',
-    completed: false
-}, {
-    text: 'Exercise',
-    completed: true
-}]
-
-// 1. create a div containing all todos
-// 2. Render inside the div, not in the body
-// 3. create renderTodos function, taking in notes and filters as args
-// 4. call renderTodos
-// 5. at input event, update the filter and renderTodos with the new filter
+let todos = []
+const todosJSON = localStorage.getItem('todos')
+if(todosJSON) {
+    todos = JSON.parse(todosJSON)
+}
 
 const filters = {
     searchText: '',
@@ -71,16 +54,11 @@ document.querySelector('#new-todo').addEventListener('submit', function(e) {
         text: e.target.elements.newTodoInput.value,
         completed: false
     })
+    localStorage.setItem('todos', JSON.stringify(todos))
     renderTodos(todos, filters)
     e.target.elements.newTodoInput.value = ''
 })
 
-// 1. Add a checkbox with Hide Completed, the default value false
-// 2. Add filters.hideCompleted as default value false
-// 3. Listen for the checkbox change event
-//     - Update filters.hideCompleted with the value from the checkbox
-//     - call RenderTodos() with the updated filters
-// 4. Update renderTodos function to use filters.hideCompleted
 document.querySelector('#hide-completed').addEventListener('change', function(e) {
     filters.hideCompleted = e.target.checked
     renderTodos(todos, filters)
