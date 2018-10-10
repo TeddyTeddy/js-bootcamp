@@ -14,12 +14,22 @@ const saveNotes = function(notes) {
 }
 // generate DOM structure for a note
 const generateNoteDOM = function(note) {
-    const noteEl = document.createElement('p')
+    const noteEl = document.createElement('div')
+    const textEl = document.createElement('span')
+
+    // setup the remove note button
+    const buttonEl = document.createElement('button')
+    buttonEl.textContent = 'x'
+
+    // setup the note title text
     if(note.title.length > 0) {
-        noteEl.textContent = note.title
+        textEl.textContent = note.title
     } else {
-        noteEl.textContent = 'Unnamed note'
+        textEl.textContent = 'Unnamed note'
     }
+
+    noteEl.appendChild(buttonEl)
+    noteEl.appendChild(textEl)
     return noteEl    
 }
 

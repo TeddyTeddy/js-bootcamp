@@ -15,7 +15,7 @@ const saveTodos = function(todos) {
 const getFilteredTodos = function(todos, filters) {
     const filteredTodos = todos.filter(function(todo) {
         const containsSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
-        const hideTodo = filters.hideCompleted && todo.completed 
+        const hideTodo = filters.hideCompleted && todo.completed
         return containsSearchText && !hideTodo
     })
     return filteredTodos
@@ -38,8 +38,22 @@ const generateSummaryDOM = function(count) {
 }
 
 const generateTodoDOM = function(todo) {
-    const todoDOM = document.createElement('p')
-    todoDOM.textContent = todo.text
+    const todoDOM = document.createElement('div')
+    // create & set the checkbox
+    const checkboxDOM = document.createElement('input')
+    checkboxDOM.setAttribute('type', 'checkbox')
+    todoDOM.appendChild(checkboxDOM)
+
+    // create & set a span for todo's content
+    const spanDOM = document.createElement('span')
+    spanDOM.textContent = todo.text
+    todoDOM.appendChild(spanDOM)
+
+    // create & set a delete button
+    const deleteBtnDOM = document.createElement('button')
+    deleteBtnDOM.textContent = 'x'
+    todoDOM.appendChild(deleteBtnDOM)
+    
     return todoDOM
 }
 
@@ -47,7 +61,6 @@ const generateTodoDOM = function(todo) {
 const renderTodos = function(todos, filters) {
     // get filtered todos, case insensitive filtering
     const filteredTodos = getFilteredTodos(todos, filters)
-
     // render 'You have 2 todos left'
     const count = getIncompleteTodoCount(filteredTodos)
 
