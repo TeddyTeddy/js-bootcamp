@@ -39,9 +39,12 @@ const generateSummaryDOM = function(count) {
 
 const generateTodoDOM = function(todo) {
     const todoDOM = document.createElement('div')
+    // set id attribute as todo's id, this will be used later
+    todoDOM.setAttribute('id', todo.id)
     // create & set the checkbox
     const checkboxDOM = document.createElement('input')
     checkboxDOM.setAttribute('type', 'checkbox')
+    checkboxDOM.checked = todo.completed
     todoDOM.appendChild(checkboxDOM)
 
     // create & set a span for todo's content
@@ -74,4 +77,17 @@ const renderTodos = function(todos, filters) {
         const todoDOM = generateTodoDOM(todo)
         document.querySelector('#todos').appendChild(todoDOM)
     })    
+}
+
+const removeTodo = function(todos, id) {
+    todos.remove(function(todo) {
+        return todo.id === id
+    })
+}
+
+const toggleTodo = function(todos, targetID) {
+    todo = todos.find(function(todo) { // uses sugar library's find method!
+        return todo.id === targetID
+    }) // returns a reference from todos array, not a copy
+    todo.completed = todo.completed ? false : true
 }

@@ -15,6 +15,9 @@ const saveNotes = function(notes) {
 // generate DOM structure for a note
 const generateNoteDOM = function(note) {
     const noteEl = document.createElement('div')
+    // set id of noteEl to note.uuid, this will be used in deleting the note
+    noteEl.setAttribute('id', note.id)
+
     const textEl = document.createElement('span')
 
     // setup the remove note button
@@ -43,4 +46,11 @@ const renderNotes = function (notes, filters) {
         const noteEl = generateNoteDOM(note)
         document.querySelector('#notes').appendChild(noteEl)
     })
+}
+
+const removeNote = function(notes, id) {
+    // sugar.js, remove the object from notes array of objects matching the uuid
+    notes.remove(function(note) { 
+        return note.id === id 
+    });
 }
