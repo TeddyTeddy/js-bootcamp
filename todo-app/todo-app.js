@@ -47,7 +47,7 @@ document.querySelector('#todos').addEventListener('click', function(e) {
 
 // mark todo as done/undone functionality
 document.querySelector('#todos').addEventListener('change', function(e) {
-    if(e.target.tagName === 'INPUT') {
+    if(e.target.tagName === 'INPUT') { // act only if checkbox is checked or unchecked
         const targetID = e.target.parentElement.getAttribute('id')
         toggleTodo(todos, targetID)
         saveTodos(todos) // to local storage
