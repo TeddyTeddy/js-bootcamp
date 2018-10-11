@@ -51,6 +51,7 @@ document.querySelector('#todos').addEventListener('change', function(e) {
         const targetID = e.target.parentElement.getAttribute('id')
         toggleTodo(todos, targetID)
         saveTodos(todos) // to local storage
+        renderTodos(todos, filters)
     }
 })
     
