@@ -8,20 +8,21 @@
 
 Sugar.extend(); // To use Sugar's Array functions on native objects (i.e. Array)
 
-const notes = getSavedNotes()
+const notes = getSavedNotes() // from local storage
 const filters = {
     searchText: ''
 }
 
 renderNotes(notes, filters)
 
+// creating a new note functionality
 document.querySelector('#create-note').addEventListener('click', function(e) {
     notes.push({
         id: uuidv4(),
         title: '',
         body: ''
     })
-    saveNotes(notes)
+    saveNotes(notes) // to local storage
     renderNotes(notes, filters)
 })
 

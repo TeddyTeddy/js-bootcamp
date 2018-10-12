@@ -1,5 +1,5 @@
 Sugar.extend() // To use Sugar's Array functions on native objects (i.e. Array)
-const todos = getSavedTodos()
+const todos = getSavedTodos() // from local storage
 
 const filters = {
     searchText: '',
