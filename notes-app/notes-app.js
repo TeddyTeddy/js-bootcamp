@@ -8,7 +8,7 @@
 
 Sugar.extend(); // To use Sugar's Array functions on native objects (i.e. Array)
 
-const notes = getSavedNotes() // from local storage
+let notes = getSavedNotes() // from local storage
 const filters = {
     searchText: ''
 }
@@ -45,6 +45,14 @@ document.querySelector('#notes').addEventListener('click', function(e) {
         // Delete from the notes array the note with the uuid
         removeNote(notes, targetID)
         saveNotes(notes) // to local storage
+        renderNotes(notes, filters)
+    }
+})
+
+// local storage changed event
+window.addEventListener('storage', function(e) {
+    if(e.key === 'notes') { // take action only if notes item in LocalStorage change
+        notes = JSON.parse(e.newValue)
         renderNotes(notes, filters)
     }
 })
