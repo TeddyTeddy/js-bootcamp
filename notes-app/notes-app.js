@@ -17,13 +17,14 @@ renderNotes(notes, filters)
 
 // creating a new note functionality
 document.querySelector('#create-note').addEventListener('click', function(e) {
+    const uuid = uuidv4()
     notes.push({
-        id: uuidv4(),
+        id: uuid,
         title: '',
         body: ''
     })
     saveNotes(notes) // to local storage
-    renderNotes(notes, filters)
+    location.assign(`/edit.html#${uuid}`)
 })
 
 // search text filtering functionality

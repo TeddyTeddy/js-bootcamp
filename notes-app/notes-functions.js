@@ -18,21 +18,21 @@ const generateNoteDOM = function(note) {
     // set id of noteEl to note.uuid, this will be used in deleting the note
     noteEl.setAttribute('id', note.id)
 
-    const textEl = document.createElement('span')
-
     // setup the remove note button
     const buttonEl = document.createElement('button')
     buttonEl.textContent = 'x'
 
+    const anchorEl = document.createElement('a')
+    anchorEl.setAttribute('href', `/edit.html#${note.id}`)
     // setup the note title text
     if(note.title.length > 0) {
-        textEl.textContent = note.title
+        anchorEl.textContent = note.title
     } else {
-        textEl.textContent = 'Unnamed note'
+        anchorEl.textContent = 'Unnamed note'
     }
 
     noteEl.appendChild(buttonEl)
-    noteEl.appendChild(textEl)
+    noteEl.appendChild(anchorEl)
     return noteEl    
 }
 
