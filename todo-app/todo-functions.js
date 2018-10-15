@@ -1,4 +1,4 @@
-// get saved todos from local storage
+// return todos from local storage if exist, if not, return an empty array
 const getSavedTodos = function() {
     const todosJSON = localStorage.getItem('todos')
     if(todosJSON) {
@@ -8,22 +8,34 @@ const getSavedTodos = function() {
     }
 }
 
+// save todos to local storage
 const saveTodos = function(todos) {
-    localStorage.setItem('todos', JSON.stringify(todos))    
+    localStorage.setItem('todos', JSON.stringify(todos))
 }
 
-const getFilteredTodos = function(todos, filters) {
-    const filteredTodos = todos.filter(function(todo) {
-        const containsSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
-        const hideTodo = filters.hideCompleted && todo.completed
-        return containsSearchText && !hideTodo
-    })
-    return filteredTodos
+const generateTodoDOM = function(todo) {
+    const divDOM = document.createElement('div')
+    divDOM.setAttribute('id', todo.id)
+
+    const checkboxDOM = document.createElement('input')
+    checkboxDOM.setAttribute('type', 'checkbox')
+    checkboxDOM.checked = todo.completed
+    divDOM.appendChild(checkboxDOM)
+
+    const spanDOM = document.createElement('span')
+    spanDOM.textContent = todo.text
+    divDOM.appendChild(spanDOM)
+
+    const removeBtnDOM = document.createElement('button')
+    removeBtnDOM.textContent = 'x'
+    divDOM.appendChild(removeBtnDOM)
+
+    return divDOM
 }
 
-const getIncompleteTodoCount = function(filteredTodos) {
+const getIncompleTodosCount = function(todos) {
     let count = 0
-    filteredTodos.forEach(function(todo) {
+    todos.forEach(todo => {
         if(!todo.completed) {
             ++count
         }
@@ -31,63 +43,48 @@ const getIncompleteTodoCount = function(filteredTodos) {
     return count
 }
 
-const generateSummaryDOM = function(count) {
-    const summaryDOM = document.createElement('h2')
-    summaryDOM.textContent = `You have ${count} todo(s) left`
-    return summaryDOM
-}
-
-const generateTodoDOM = function(todo) {
-    const todoDOM = document.createElement('div')
-    // set id attribute as todo's id, this will be used later
-    todoDOM.setAttribute('id', todo.id)
-    // create & set the checkbox
-    const checkboxDOM = document.createElement('input')
-    checkboxDOM.setAttribute('type', 'checkbox')
-    checkboxDOM.checked = todo.completed
-    todoDOM.appendChild(checkboxDOM)
-
-    // create & set a span for todo's content
-    const spanDOM = document.createElement('span')
-    spanDOM.textContent = todo.text
-    todoDOM.appendChild(spanDOM)
-
-    // create & set a delete button
-    const deleteBtnDOM = document.createElement('button')
-    deleteBtnDOM.textContent = 'x'
-    todoDOM.appendChild(deleteBtnDOM)
-    
-    return todoDOM
-}
-
-// render todos
-const renderTodos = function(todos, filters) {
-    // get filtered todos, case insensitive filtering
-    const filteredTodos = getFilteredTodos(todos, filters)
-    // render 'You have 2 todos left'
-    const count = getIncompleteTodoCount(filteredTodos)
-
-    // clear old summary
-    document.querySelector('#todos').innerHTML = ''
-    const summaryDOM = generateSummaryDOM(count)
-    document.querySelector('#todos').appendChild(summaryDOM)
-
-    // Render filtered todos
-    filteredTodos.forEach(function(todo) {
-        const todoDOM = generateTodoDOM(todo)
-        document.querySelector('#todos').appendChild(todoDOM)
-    })    
-}
-
-const removeTodo = function(todos, id) {
-    todos.remove(function(todo) {
-        return todo.id === id
+const filterTodos = function(todos, filters) {
+    return todos.filter(function(todo) {
+        const includesSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const hideTodo = filters.hideCompleted && todo.completed
+        return includesSearchText && !hideTodo
     })
 }
 
-const toggleTodo = function(todos, targetID) {
-    todo = todos.find(function(todo) { // uses sugar library's find method!
-        return todo.id === targetID
-    }) // returns a reference from todos array, not a copy
-    todo.completed = todo.completed ? false : true
+const renderTodos = function(todos, filters) {
+    const filteredTodos = filterTodos(todos, filters)
+
+    const todosDOM = document.querySelector('#todos')
+    todosDOM.innerHTML = ''
+
+    // render 'You have x todos left' headline
+    const h1DOM = document.createElement('h1')
+    const count = getIncompleTodosCount(filteredTodos)
+    h1DOM.textContent = `You have ${count} todo(s) left`
+    todosDOM.appendChild(h1DOM)
+
+    filteredTodos.forEach(function(todo) {
+        const todoDOM = generateTodoDOM(todo)
+        todosDOM.appendChild(todoDOM)
+    })
+}
+
+// toggleTodo with target id with isChecked
+const toggleTodo = function(todos, targetId, isChecked) {
+    const todo = todos.find(todo => todo.id === targetId)
+    if(todo) {
+        todo.completed = isChecked
+    } else {
+        console.log(`Warning: todo with id ${targetId} is not found in todos array`)
+    }
+}
+
+// removeTodo with targetId from todos array
+const removeTodo = function(todos, targetId) {
+    const index = todos.findIndex(todo => todo.id === targetId )
+    if(index === -1) {
+        console.log(`Warning: todo with id ${targetId} not found in todos array`)
+    } else {
+        todos.splice(index, 1) // remove the very todo which has a matching id from notes array
+    }
 }

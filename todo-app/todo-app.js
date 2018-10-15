@@ -1,58 +1,64 @@
-Sugar.extend() // To use Sugar's Array functions on native objects (i.e. Array)
-const todos = getSavedTodos() // from local storage
-
 const filters = {
-    searchText: '',
-    hideCompleted: false
+    searchText: ''
 }
+
+let todos = getSavedTodos() // from local storage
 
 renderTodos(todos, filters)
 
-// listen for keystorekes in #search-tex input element
-document.querySelector('#search-text').addEventListener('input', function(e) {
+// filter todos
+document.querySelector('#filter-todos').addEventListener('input', function(e) {
     filters.searchText = e.target.value
     renderTodos(todos, filters)
 })
 
-// adding a new todo functionality
-document.querySelector('#new-todo').addEventListener('submit', function(e) { 
-    e.preventDefault()
-    todos.push({
-        id: uuidv4(),
-        text: e.target.elements.newTodoInput.value,
-        completed: false
-    })
-    saveTodos(todos) // to local storage
-    renderTodos(todos, filters)
-    e.target.elements.newTodoInput.value = ''
-})
-
-// hide completed todos functionality
+// hide completed
 document.querySelector('#hide-completed').addEventListener('change', function(e) {
     filters.hideCompleted = e.target.checked
     renderTodos(todos, filters)
 })
 
+// add new todo
+document.querySelector('#new-todo').addEventListener('submit', function(e) {
+    e.preventDefault()
+    const todoText = e.target.elements.newTodoText.value
+    if(todoText.length > 0) {
+        todos.push({
+            id: uuidv4(),
+            text: todoText,
+            completed: false
+        })
+        saveTodos(todos) // to local storage
+        renderTodos(todos, filters)
+        e.target.elements.newTodoText.value = '' // clear the input field newTodoText
+    }
+})
+
+// todo checkbox checked/unchecked : todo marked as done/undone
+document.querySelector('#todos').addEventListener('change', function(e) {
+    if(e.target.tagName === 'INPUT') { // act only if event is coming from checkbox
+        const targetId = e.target.parentElement.getAttribute('id')
+        const isChecked = e.target.checked
+        toggleTodo(todos, targetId, isChecked)
+        saveTodos(todos) // to local storage
+        renderTodos(todos, filters)
+    }
+})
+
 // removing a todo functionality
 document.querySelector('#todos').addEventListener('click', function(e) {
-    if(e.target.tagName === 'BUTTON') { // check if the event is coming from delete button itself
-        // get from parent div element the id of todo
-        const targetID = e.target.parentElement.getAttribute('id')
-        // remove the todo with the id from todos array
-        removeTodo(todos, targetID)
+    if(e.target.tagName === 'BUTTON') { // act only if the click event is coming from the button itself
+        const targetId = e.target.parentElement.getAttribute('id')
+        removeTodo(todos, targetId)
         saveTodos(todos) // to local storage
         renderTodos(todos, filters)
     }
 })
 
-// mark todo as done/undone functionality
-document.querySelector('#todos').addEventListener('change', function(e) {
-    if(e.target.tagName === 'INPUT') { // act only if checkbox is checked or unchecked
-        const targetID = e.target.parentElement.getAttribute('id')
-        toggleTodo(todos, targetID)
-        saveTodos(todos) // to local storage
+// local storage changed event
+window.addEventListener('storage', function(e) {
+    if(e.key === 'todos') { // act only if todos item is changed in local storage
+        todos = JSON.parse(e.newValue)
         renderTodos(todos, filters)
     }
 })
-    
-
