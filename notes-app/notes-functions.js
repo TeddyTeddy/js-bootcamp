@@ -48,9 +48,13 @@ const renderNotes = function (notes, filters) {
     })
 }
 
-const removeNote = function(notes, id) {
-    // sugar.js, remove the object from notes array of objects matching the uuid
-    notes.remove(function(note) { 
-        return note.id === id 
-    });
+const removeNote = function(notes, targetId) {
+    const index = notes.findIndex(function(note) {
+        return note.id === targetId
+    })
+    if(index !== -1) {
+        notes.splice(index, 1) // remove the note that matched targetId
+    } else {
+        console.log(`Warning: Target Id ${targetId} was not found in notes array`)
+    }
 }

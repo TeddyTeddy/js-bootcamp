@@ -1,13 +1,3 @@
-// DOM - Document Object Model
-// Document: The HTML document
-// Object: JS object modeling the HTML document
-
-// query and remove
-// const p = document.querySelector('p')
-// p.remove()
-
-Sugar.extend(); // To use Sugar's Array functions on native objects (i.e. Array)
-
 let notes = getSavedNotes() // from local storage
 const filters = {
     searchText: ''

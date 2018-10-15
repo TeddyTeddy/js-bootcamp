@@ -1,5 +1,3 @@
-Sugar.extend(); // To use Sugar's Array functions on native objects (i.e. Array)
-
 const noteTitleDOM = document.querySelector('#note-title')
 const noteBodyDOM = document.querySelector('#note-body')
 const removeButtonDOM = document.querySelector('#remove-note')
