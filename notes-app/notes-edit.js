@@ -59,7 +59,8 @@ removeButtonDOM.addEventListener('click', function(e) {
 
 // listem fpr changes in local storage
 window.addEventListener('storage', function(e) {
-    if(e.key === 'notes') { // act only if notes item is modified in localStorage
+    if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
+        // act only if notes item is modified/deleted in localStorage
         init()
     } 
 })
