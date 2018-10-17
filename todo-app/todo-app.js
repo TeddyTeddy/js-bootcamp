@@ -57,8 +57,8 @@ document.querySelector('#todos').addEventListener('click', function(e) {
 
 // local storage changed event
 window.addEventListener('storage', function(e) {
-    if(e.key === 'todos') { // act only if todos item is changed in local storage
-        todos = JSON.parse(e.newValue)
+    if((e.key === 'todos') || (localStorage.getItem('todos') === null)) { // act only if todos item is changed in local storage
+        todos = getSavedTodos()
         renderTodos(todos, filters)
     }
 })
