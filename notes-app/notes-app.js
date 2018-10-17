@@ -48,8 +48,9 @@ document.querySelector('#notes').addEventListener('click', function(e) {
 
 // local storage changed event
 window.addEventListener('storage', function(e) {
-    if(e.key === 'notes') { // take action only if notes item in LocalStorage change
-        notes = JSON.parse(e.newValue)
+    if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
+        // take action only if notes item in LocalStorage got changed/deleted
+        notes = getSavedNotes() // from local storage
         renderNotes(notes, filters)
     }
 })
