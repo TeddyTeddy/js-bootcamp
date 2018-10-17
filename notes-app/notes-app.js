@@ -1,6 +1,8 @@
+const filterByDOM = document.querySelector('#filter-by')
 let notes = getSavedNotes() // from local storage
 const filters = {
-    searchText: ''
+    searchText: '',
+    sortBy: filterByDOM.value  // byEdited at default
 }
 
 renderNotes(notes, filters)
@@ -8,10 +10,13 @@ renderNotes(notes, filters)
 // creating a new note functionality
 document.querySelector('#create-note').addEventListener('click', function(e) {
     const uuid = uuidv4()
+    const now = moment().valueOf()
     notes.push({
         id: uuid,
         title: '',
-        body: ''
+        body: '',
+        createdAt: now,
+        updatedAt: now
     })
     saveNotes(notes) // to local storage
     location.assign(`/edit.html#${uuid}`)
@@ -24,7 +29,9 @@ document.querySelector('#search-text').addEventListener('input', function(e) {
 })
 
 document.querySelector('#filter-by').addEventListener('change', function(e) {
-    console.log(e.target.value)
+    // update filters.sortBy property with the value set in the #filter-by
+    filters.sortBy = e.target.value
+    renderNotes(notes, filters)
 })
 
 // remove note event handler utilizing the event bubling

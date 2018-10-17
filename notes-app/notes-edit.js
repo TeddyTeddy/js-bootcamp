@@ -1,6 +1,7 @@
 const noteTitleDOM = document.querySelector('#note-title')
 const noteBodyDOM = document.querySelector('#note-body')
 const removeButtonDOM = document.querySelector('#remove-note')
+const lastEditedDOM = document.querySelector('#last-edited')
 
 let noteId, notes, note
 
@@ -19,6 +20,8 @@ const init = function() {
     // note is found, show the note's contents in UI
     noteTitleDOM.value = note.title
     noteBodyDOM.value = note.body
+    // update the last edited text in ui
+    lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
 }
 
 init()
@@ -27,6 +30,10 @@ init()
 noteTitleDOM.addEventListener('input', function(e) {
     // update the note.title with the value from ui
     note.title = e.target.value // note obj is a reference in notes array!
+    // update the updatedAt property for the note
+    note.updatedAt = moment().valueOf()
+    // update the last edited text in ui    
+    lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
     saveNotes(notes) // to local storage
 })
 
@@ -34,6 +41,10 @@ noteTitleDOM.addEventListener('input', function(e) {
 noteBodyDOM.addEventListener('input', function(e) {
     // update the note body with the value from ui
     note.body = e.target.value // note obj is a reference in notes array!
+    // update the updatedAt property for the note
+    note.updatedAt = moment().valueOf()
+    // update the last edited text in ui
+    lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
     saveNotes(notes) // to local storage
 })
 

@@ -36,12 +36,55 @@ const generateNoteDOM = function(note) {
     return noteEl    
 }
 
+// modifies directly the notes array passed based on filters
+const sortNotes = function(notes, sortBy) {
+    if(sortBy === 'byEdited') {
+        // sort notes array according to the last edited : last edited comes first
+        notes.sort(function(a, b){
+            if(a.updatedAt > b.updatedAt) {
+                return -1 // a comes first, a is more recent
+            } else if(a.updatedAt < b.updatedAt) {
+                return 1 // b comes first, b is more recent
+            } else {
+                // the updatedAt timestamps are equal
+                return 0
+            }
+        })
+    } else if(sortBy === 'byCreated') {
+        // sort notes array acc.to the last created : last created comes first
+        notes.sort(function(a, b) {
+            if(a.createdAt > b.createdAt) {
+                return -1 // a comes first, a is more recent
+            } else if(a.createdAt < b.createdAt) {
+                return 1 // b comes first, b is more recent
+            } else {
+                return 0 // the createdAt timestamps are equal
+            }
+        })
+    } else if(sortBy === 'alphabetical') {
+        // sort notes array alphabetically based on the title property
+        notes.sort(function(a, b) {
+            if(a.title.toLowerCase() > b.title.toLowerCase()) {
+                return 1 // b comes first
+            } else if(b.title.toLowerCase() > a.title.toLowerCase()) {
+                return -1 // a comes first
+            } else {
+                return 0 // a & b's titles match in order
+            }
+        })
+    }
+}
+
 // render application notes
 const renderNotes = function (notes, filters) {
     const filteredNotes = notes.filter(function(note) {
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
     })
+    // sort filteredNotes : manipulating the filteredNotes itself
+    sortNotes(filteredNotes, filters.sortBy)
+
     document.querySelector('#notes').innerHTML = ''
+
     filteredNotes.forEach(function(note) {
         const noteEl = generateNoteDOM(note)
         document.querySelector('#notes').appendChild(noteEl)
@@ -57,4 +100,9 @@ const removeNote = function(notes, targetId) {
     } else {
         console.log(`Warning: Target Id ${targetId} was not found in notes array`)
     }
+}
+
+// takes in the time stamp updatedAt
+const generatedLastEditedText = function(updatedAt) {
+    return `Last edited ${moment(updatedAt).fromNow()}`
 }
