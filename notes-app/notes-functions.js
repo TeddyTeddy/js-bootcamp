@@ -1,5 +1,5 @@
 // read existing notes from local storage
-const getSavedNotes = function() {
+const getSavedNotes = () => {
     const notesJSON = localStorage.getItem('notes')
     if(notesJSON) {
         return JSON.parse(notesJSON)
@@ -9,11 +9,10 @@ const getSavedNotes = function() {
 }
 
 // save the notes to local storage
-const saveNotes = function(notes) {
-    localStorage.setItem('notes', JSON.stringify(notes))
-}
+const saveNotes = notes => localStorage.setItem('notes', JSON.stringify(notes))
+
 // generate DOM structure for a note
-const generateNoteDOM = function(note) {
+const generateNoteDOM = note => {
     const noteEl = document.createElement('div')
     // set id of noteEl to note.uuid, this will be used in deleting the note
     noteEl.setAttribute('id', note.id)
@@ -37,7 +36,7 @@ const generateNoteDOM = function(note) {
 }
 
 // modifies directly the notes array passed based on filters
-const sortNotes = function(notes, sortBy) {
+const sortNotes = (notes, sortBy) => {
     if(sortBy === 'byEdited') {
         // sort notes array according to the last edited : last edited comes first
         notes.sort(function(a, b){
@@ -76,25 +75,22 @@ const sortNotes = function(notes, sortBy) {
 }
 
 // render application notes
-const renderNotes = function (notes, filters) {
-    const filteredNotes = notes.filter(function(note) {
-        return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
-    })
+const renderNotes = (notes, filters) => {
+
+    const filteredNotes = notes.filter( note => note.title.toLowerCase().includes(filters.searchText.toLowerCase()) )
     // sort filteredNotes : manipulating the filteredNotes itself
     sortNotes(filteredNotes, filters.sortBy)
 
     document.querySelector('#notes').innerHTML = ''
 
-    filteredNotes.forEach(function(note) {
+    filteredNotes.forEach( note => {
         const noteEl = generateNoteDOM(note)
         document.querySelector('#notes').appendChild(noteEl)
     })
 }
 
-const removeNote = function(notes, targetId) {
-    const index = notes.findIndex(function(note) {
-        return note.id === targetId
-    })
+const removeNote = (notes, targetId) => {
+    const index = notes.findIndex( note => note.id === targetId )
     if(index !== -1) {
         notes.splice(index, 1) // remove the note that matched targetId
     } else {
@@ -103,6 +99,4 @@ const removeNote = function(notes, targetId) {
 }
 
 // takes in the time stamp updatedAt
-const generatedLastEditedText = function(updatedAt) {
-    return `Last edited ${moment(updatedAt).fromNow()}`
-}
+const generatedLastEditedText = updatedAt => `Last edited ${moment(updatedAt).fromNow()}`

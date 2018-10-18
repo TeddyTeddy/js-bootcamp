@@ -12,7 +12,7 @@ function runNotesApp() {
     renderNotes(notes, filters)
     
     // creating a new note functionality
-    document.querySelector('#create-note').addEventListener('click', function(e) {
+    document.querySelector('#create-note').addEventListener('click', e => {
         const uuid = uuidv4()
         const now = moment().valueOf()
         notes.push({
@@ -27,19 +27,20 @@ function runNotesApp() {
     })
     
     // search text filtering functionality
-    document.querySelector('#search-text').addEventListener('input', function(e) {
+    document.querySelector('#search-text').addEventListener('input', e => {
         filters.searchText = e.target.value
         renderNotes(notes, filters)
     })
     
-    document.querySelector('#filter-by').addEventListener('change', function(e) {
+    // filter by sorting functionality
+    document.querySelector('#filter-by').addEventListener('change', e => {
         // update filters.sortBy property with the value set in the #filter-by
         filters.sortBy = e.target.value
         renderNotes(notes, filters)
     })
     
     // remove note event handler utilizing the event bubling
-    document.querySelector('#notes').addEventListener('click', function(e) {
+    document.querySelector('#notes').addEventListener('click', e => {
         if(e.target.tagName === 'BUTTON') {
             // grab the parent div's id as uuid
             const targetID = e.target.parentElement.getAttribute('id')
@@ -51,7 +52,7 @@ function runNotesApp() {
     })
     
     // local storage changed event
-    window.addEventListener('storage', function(e) {
+    window.addEventListener('storage', e => {
         if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
             // take action only if notes item in LocalStorage got changed/deleted
             notes = getSavedNotes() // from local storage

@@ -1,5 +1,5 @@
 // return todos from local storage if exist, if not, return an empty array
-const getSavedTodos = function() {
+const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
     if(todosJSON) {
         return JSON.parse(todosJSON)
@@ -9,11 +9,10 @@ const getSavedTodos = function() {
 }
 
 // save todos to local storage
-const saveTodos = function(todos) {
-    localStorage.setItem('todos', JSON.stringify(todos))
-}
+const saveTodos = todos => localStorage.setItem('todos', JSON.stringify(todos))
 
-const generateTodoDOM = function(todo) {
+
+const generateTodoDOM = todo => {
     const divDOM = document.createElement('div')
     divDOM.setAttribute('id', todo.id)
 
@@ -33,7 +32,7 @@ const generateTodoDOM = function(todo) {
     return divDOM
 }
 
-const getIncompleTodosCount = function(todos) {
+const getIncompleTodosCount = todos => {
     let count = 0
     todos.forEach(todo => {
         if(!todo.completed) {
@@ -43,15 +42,15 @@ const getIncompleTodosCount = function(todos) {
     return count
 }
 
-const filterTodos = function(todos, filters) {
-    return todos.filter(function(todo) {
+const filterTodos = (todos, filters) => {
+    return todos.filter( todo => {
         const includesSearchText = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
         const hideTodo = filters.hideCompleted && todo.completed
         return includesSearchText && !hideTodo
     })
 }
 
-const renderTodos = function(todos, filters) {
+const renderTodos = (todos, filters) => {
     const filteredTodos = filterTodos(todos, filters)
 
     const todosDOM = document.querySelector('#todos')
@@ -63,14 +62,14 @@ const renderTodos = function(todos, filters) {
     h1DOM.textContent = `You have ${count} todo(s) left`
     todosDOM.appendChild(h1DOM)
 
-    filteredTodos.forEach(function(todo) {
+    filteredTodos.forEach( todo => {
         const todoDOM = generateTodoDOM(todo)
         todosDOM.appendChild(todoDOM)
     })
 }
 
 // toggleTodo with target id with isChecked
-const toggleTodo = function(todos, targetId, isChecked) {
+const toggleTodo = (todos, targetId, isChecked) => {
     const todo = todos.find(todo => todo.id === targetId)
     if(todo) {
         todo.completed = isChecked
@@ -80,7 +79,7 @@ const toggleTodo = function(todos, targetId, isChecked) {
 }
 
 // removeTodo with targetId from todos array
-const removeTodo = function(todos, targetId) {
+const removeTodo = (todos, targetId) => {
     const index = todos.findIndex(todo => todo.id === targetId )
     if(index === -1) {
         console.log(`Warning: todo with id ${targetId} not found in todos array`)

@@ -11,9 +11,7 @@ function runNotesEdit() {
     const init = function() {
         noteId = location.hash.substring(1)
         notes = getSavedNotes()
-        note = notes.find(function(note) {
-            return note.id === noteId
-        })
+        note = notes.find( note => note.id === noteId )
         
         // if note is not found, redirect to main page
         if(!note) {
@@ -30,7 +28,7 @@ function runNotesEdit() {
     init()
     
     // updating the note title functionality
-    noteTitleDOM.addEventListener('input', function(e) {
+    noteTitleDOM.addEventListener('input', e => {
         // update the note.title with the value from ui
         note.title = e.target.value // note obj is a reference in notes array!
         // update the updatedAt property for the note
@@ -41,7 +39,7 @@ function runNotesEdit() {
     })
     
     // updating the note body functionality
-    noteBodyDOM.addEventListener('input', function(e) {
+    noteBodyDOM.addEventListener('input', e => {
         // update the note body with the value from ui
         note.body = e.target.value // note obj is a reference in notes array!
         // update the updatedAt property for the note
@@ -52,7 +50,7 @@ function runNotesEdit() {
     })
     
     // removing the note functionality
-    removeButtonDOM.addEventListener('click', function(e) {
+    removeButtonDOM.addEventListener('click', e => {
         // remove the note from notes array
         removeNote(notes, note.id)
         saveNotes(notes) // to local storage
@@ -60,8 +58,8 @@ function runNotesEdit() {
         location.assign('/index.html')
     })
     
-    // listem fpr changes in local storage
-    window.addEventListener('storage', function(e) {
+    // listen for changes in local storage
+    window.addEventListener('storage', e => {
         if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
             // act only if notes item is modified/deleted in localStorage
             init()
