@@ -1,11 +1,7 @@
 // return todos from local storage if exist, if not, return an empty array
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
-    if(todosJSON) {
-        return JSON.parse(todosJSON)
-    } else {
-        return []
-    }
+    return todosJSON ? JSON.parse(todosJSON) : []
 }
 
 // save todos to local storage
