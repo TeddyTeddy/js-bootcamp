@@ -25,7 +25,7 @@ function runTodoApp() {
     document.querySelector('#new-todo').addEventListener('submit', e => {
         e.preventDefault()
         const todoText = e.target.elements.newTodoText.value
-        if(todoText.length > 0) {
+        if(todoText.length) {
             todos.push({
                 id: uuidv4(),
                 text: todoText,
@@ -60,7 +60,7 @@ function runTodoApp() {
     
     // local storage changed event
     window.addEventListener('storage', e => {
-        if((e.key === 'todos') || (localStorage.getItem('todos') === null)) { // act only if todos item is changed in local storage
+        if((e.key === 'todos') || (!localStorage.getItem('todos'))) { // act only if todos item is changed in local storage
             todos = getSavedTodos()
             renderTodos(todos, filters)
         }

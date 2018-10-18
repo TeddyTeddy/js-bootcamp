@@ -20,7 +20,7 @@ const generateNoteDOM = note => {
     const anchorEl = document.createElement('a')
     anchorEl.setAttribute('href', `/edit.html#${note.id}`)
     // setup the note title text
-    anchorEl.textContent = (note.title.length > 0) ? note.title : 'Unnamed note'
+    anchorEl.textContent = note.title.length ? note.title : 'Unnamed note'
 
     noteEl.appendChild(buttonEl)
     noteEl.appendChild(anchorEl)

@@ -53,7 +53,7 @@ function runNotesApp() {
     
     // local storage changed event
     window.addEventListener('storage', e => {
-        if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
+        if((e.key === 'notes') || (!localStorage.getItem('notes'))) { 
             // take action only if notes item in LocalStorage got changed/deleted
             notes = getSavedNotes() // from local storage
             renderNotes(notes, filters)

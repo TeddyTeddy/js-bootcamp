@@ -60,7 +60,7 @@ function runNotesEdit() {
     
     // listen for changes in local storage
     window.addEventListener('storage', e => {
-        if((e.key === 'notes') || (localStorage.getItem('notes') === null)) { 
+        if((e.key === 'notes') || (!localStorage.getItem('notes'))) { 
             // act only if notes item is modified/deleted in localStorage
             init()
         } 
