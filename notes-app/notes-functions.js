@@ -1,7 +1,14 @@
 // read existing notes from local storage
 const getSavedNotes = () => {
     const notesJSON = localStorage.getItem('notes')
-    return notesJSON ? JSON.parse(notesJSON) : []
+    try {
+        return notesJSON ? JSON.parse(notesJSON) : []
+    } catch(e) {
+        // JSON.parse threw an exception because 'notes' item is
+        // not in JSON format
+        localStorage.setItem('notes', JSON.stringify([])) // fix the 'notes' item with an empty array
+        return [] // as notes
+    }
 }
 
 // save the notes to local storage

@@ -1,7 +1,14 @@
 // return todos from local storage if exist, if not, return an empty array
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
-    return todosJSON ? JSON.parse(todosJSON) : []
+    try{
+        return todosJSON ? JSON.parse(todosJSON) : []
+    } catch(e) {
+        // JSON.parse has thrown an exception because todos item is corrupted and 
+        // not in JSON format anymore
+        localStorage.setItem('todos', JSON.stringify([])) // fix the corrupted todos item in local storage
+        return []
+    }
 }
 
 // save todos to local storage
