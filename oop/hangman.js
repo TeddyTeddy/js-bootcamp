@@ -12,7 +12,7 @@ Hangman.prototype.getPuzzle = function() {
         } else {
             puzzle += '*'
         }
-    });
+    })
     return puzzle
 }
 

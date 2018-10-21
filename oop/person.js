@@ -11,7 +11,7 @@ const Person = function(firstName, lastName, age, likes = []) { // construction 
 // with the instances of the constructor function
 Person.prototype.getBio = function() {
     let bio = `${this.firstName} is ${this.age}.`
-    this.likes.forEach((like) => { // arrow functions dont bind to this value
+    this.likes.forEach((like) => { // arrow functions dont bind to THIS keyword
         bio += ` ${this.firstName} likes ${like}.`
     })
     return bio
@@ -23,13 +23,13 @@ Person.prototype.setName = function(fullName) {
     this.lastName = names[1]
 }
 
-Person.prototype.location = 'Thailand'
+Person.prototype.location = 'Thailand' // a shared property among Person instances
 
 const me = new Person('Andrew', 'Mead', 27, ['Biking', 'Teaching']) // returns a custom object type of person {}
 me.setName('Alexis Turner')
 // New operator does the following:
 // 1. it generates a new empty object for this new instance
-// 2. Then it gives us uses to that empty object in the constructor
+// 2. Then it gives us access to that empty object in the constructor
 //    function via THIS keyword
 // 3. It returns the object pointed by this to the caller
 
