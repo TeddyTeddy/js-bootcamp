@@ -60,3 +60,15 @@ Hangman.prototype.makeGuess = function(guess) {
     // guess is processed, calculate the status
     this.calculateStatus()
 }
+
+Hangman.prototype.getStatusMessage= function() {
+    let statusText = ''
+    if(this.status === 'playing') {
+        statusText = `Guesses left: ${this.remainingGuesses}`
+    } else if(this.status === 'finished') {
+        statusText = 'Great work! You guessed the word'
+    } else if(this.status === 'failed') {
+        statusText = `Nice try! The word was: ${this.word.join('')}`
+    }
+    return statusText
+}
