@@ -1,7 +1,17 @@
 const Hangman = function(word, remainingGuesses) {
+    if((typeof word !== 'string') || (word === '')) {
+        throw Error('word must be a non-empty string')
+    }
+
+    if((typeof remainingGuesses !== 'number') || (remainingGuesses <= 0) ) {
+        throw Error('remainingGuesses must be a positive number')
+    }
+
+    // word and remainingGuesses arguments are valid..
     this.word = word.toLowerCase().split('')
     this.guessedLetters = []
     this.remainingGuesses = remainingGuesses
+    this.status = 'playing' // one of the following values: "playing", "failed", "finished"
 }
 
 Hangman.prototype.getPuzzle = function() {
@@ -16,34 +26,37 @@ Hangman.prototype.getPuzzle = function() {
     return puzzle
 }
 
+Hangman.prototype.calculateStatus = function() {
+    if(this.remainingGuesses === 0) {
+        this.status = 'failed'
+    } else if( (!this.getPuzzle().includes('*')) && (this.remainingGuesses > 0)) {
+        this.status = 'finished'
+    } else {
+        this.status = 'playing'
+    }
+}
+
 Hangman.prototype.makeGuess = function(guess) {
     // throw an error if guess is not a character
     if((typeof guess !== 'string') || (guess.length !== 1)) {
         throw Error('makeGuess methods expects a character')
     }
 
-    // guess is a single character
+    // guess is a single character..
     guess = guess.toLowerCase()
     // if the letter is already guessed, do nothing
-    if(this.guessedLetters.includes(guess)) {
+    // if the status is 'failed' or 'finished' game is over, do nothing
+    if(this.guessedLetters.includes(guess) || this.status !== 'playing') {
         return
     }
-    // guess is unique, it has not been done before..
-    // if the guess is incorrect, do reduce remainingGuesses by 1
+    // guess is unique; it has not been done before..
+    // & the game is not over, continue processing the guess
     if(!this.word.includes(guess)) {
-        this.remainingGuesses--
+        this.remainingGuesses--     // if the guess is incorrect, do reduce remainingGuesses by 1
     }
-
-    this.guessedLetters.push(guess)
+    
+    this.guessedLetters.push(guess) // do this so that doGetPuzzle works properly
+    
+    // guess is processed, calculate the status
+    this.calculateStatus()
 }
-
-const game1 = new Hangman('New Jersey', 3)
-
-window.addEventListener('keypress', (e) => {
-    const guess = String.fromCharCode(e.charCode)
-    if (guess.match(/^[a-z0-9]$/i)){
-        game1.makeGuess(guess)
-        console.log('Puzzle: ', game1.getPuzzle())
-        console.log('Remaining Guesses: ', game1.remainingGuesses)
-    } 
-   })
