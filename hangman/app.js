@@ -9,15 +9,15 @@ function runHangmanApp() {
         puzzleDOM.textContent = `Puzzle: ${puzzle}`
     }
     
-    showPuzzle(game.getPuzzle())
-    remainingGuessesDOM.textContent = game.getStatusMessage()
+    showPuzzle(game.puzzle)
+    remainingGuessesDOM.textContent = game.statusMessage
     
     window.addEventListener('keypress', e => {
         const guess = String.fromCharCode(e.charCode)
         if (guess.match(/^[a-z0-9]$/i)){
             game.makeGuess(guess)
-            showPuzzle(game.getPuzzle())
-            remainingGuessesDOM.textContent = game.getStatusMessage()
+            showPuzzle(game.puzzle)
+            remainingGuessesDOM.textContent = game.statusMessage
         }
     })
 }

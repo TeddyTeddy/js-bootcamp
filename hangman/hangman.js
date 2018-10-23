@@ -14,7 +14,7 @@ class Hangman {
         this.remainingGuesses = remainingGuesses
         this.status = 'playing' // one of the following values: "playing", "failed", "finished"
     }
-    getPuzzle() {
+    get puzzle() {
         let puzzle = ''
         this.word.forEach(letter => {
             if(letter === ' ' || this.guessedLetters.includes(letter)) {
@@ -28,7 +28,7 @@ class Hangman {
     calculateStatus() {
         if(this.remainingGuesses === 0) {
             this.status = 'failed'
-        } else if( (!this.getPuzzle().includes('*')) && (this.remainingGuesses > 0)) {
+        } else if( (!this.puzzle.includes('*')) && (this.remainingGuesses > 0)) {
             this.status = 'finished'
         } else {
             this.status = 'playing'
@@ -53,12 +53,12 @@ class Hangman {
             this.remainingGuesses--     // if the guess is incorrect, do reduce remainingGuesses by 1
         }
         
-        this.guessedLetters.push(guess) // do this so that doGetPuzzle works properly
+        this.guessedLetters.push(guess) // do this so that calculateStatus() works properly
         
         // guess is processed, calculate the status
         this.calculateStatus()
     }
-    getStatusMessage() {
+    get statusMessage() {
         let statusText = ''
         if(this.status === 'playing') {
             statusText = `Guesses left: ${this.remainingGuesses}`

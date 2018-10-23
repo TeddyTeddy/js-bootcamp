@@ -14,10 +14,13 @@ class Person {
         })
         return bio        
     }
-    setName(fullName) {
+    set fullName(fullName) {
         const names = fullName.split(' ')
-        this.firstName = names[0]
-        this.lastName = names[1]        
+        this.firstName = names[0] // Clancey
+        this.lastName = names[1]  // Turner      
+    }
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`
     }
 }
 
@@ -28,8 +31,8 @@ class Employee extends Person {
         this.position = position
     }
     getBio() {
-        // Andrew is a teacher
-        return `${this.firstName} ${this.lastName} is a ${this.position}`
+        // Andrew Mead is a teacher
+        return `${this.fullName} is a ${this.position}`
     }
     getYearsLeft() {
         return 65 - this.age
@@ -46,8 +49,9 @@ class Student extends Person {
         this.grade = grade
     }
     getBio() {
+        // Andrew Mead has passed the course
         const status = (this.grade >= 70) ? 'passing' : 'failing'
-        return `${this.firstName} is ${status} the course`
+        return `${this.fullName} is ${status} the course`
     }
     updateGrade(delta) {
         this.grade += delta
@@ -59,7 +63,6 @@ class Student extends Person {
     }
 }
 
-const myStudent = new Student('Andrew', 'Mead', 27, ['teaching'], 90)
-console.log(myStudent.getBio())
-myStudent.updateGrade(-40)
-console.log(myStudent.getBio())
+const me = new Employee('Andrew', 'Mead', 27, 'teacher', ['biking'])
+me.fullName = 'Clancey Turner'
+console.log(me.getBio())
