@@ -1,3 +1,5 @@
+// myPerson --> Person.prototype --> Object.prototype --> null
+
 class Person {
     constructor(firstName, lastName, age, likes = []) {
         this.firstName = firstName
@@ -19,17 +21,45 @@ class Person {
     }
 }
 
-const me = new Person('Andrew', 'Mead', 27, ['Biking', 'Teaching']) // returns a custom object type of person {}
-me.setName('Alexis Turner')
-// New operator does the following:
-// 1. it generates a new empty object for this new instance
-// 2. Then it gives us access to that empty object in the constructor
-//    function via THIS keyword
-// 3. It returns the object pointed by this to the caller
+// me --> Employee.prototype --> Person.prototype --> Object.prototype --> null
+class Employee extends Person {
+    constructor(firstName, lastName, age, position, likes) {
+        super(firstName, lastName, age, likes)
+        this.position = position
+    }
+    getBio() {
+        // Andrew is a teacher
+        return `${this.firstName} ${this.lastName} is a ${this.position}`
+    }
+    getYearsLeft() {
+        return 65 - this.age
+    }
+}
 
-console.log(me.getBio())
-console.log(me.location)
+// myStudent --> Student.prototype --> Person.prototype --> Object.Prototype --> null
+class Student extends Person {
+    constructor(firstName, lastName, age, likes, grade)  {
+        if((typeof grade !== 'number') || (grade < 0) || (grade > 100)) {
+            throw Error('"grade" argument must be a number between 0 and 100')
+        }
+        super(firstName, lastName, age, likes)
+        this.grade = grade
+    }
+    getBio() {
+        const status = (this.grade >= 70) ? 'passing' : 'failing'
+        return `${this.firstName} is ${status} the course`
+    }
+    updateGrade(delta) {
+        this.grade += delta
+        if(this.grade < 0) {
+            this.grade = 0
+        } else if(this.grade > 100) {
+            this.grade = 100
+        }
+    }
+}
 
-const person2 = new Person('Clancey', 'Turner', 51)
-console.log(person2.getBio())
-console.log(person2.location)
+const myStudent = new Student('Andrew', 'Mead', 27, ['teaching'], 90)
+console.log(myStudent.getBio())
+myStudent.updateGrade(-40)
+console.log(myStudent.getBio())
