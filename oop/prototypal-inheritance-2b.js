@@ -14,8 +14,10 @@ User.prototype.logout = function(){
     console.log(this.email, 'has logged out');
 };
 
+// ...arg is called THE REST PARAMETERS SYNTAX
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
 function Admin(...args){
-    User.apply(this, args);
+    User.apply(this, args); //  calls User with a given THIS value, and arguments provided as an array
 }
 
 Admin.prototype = Object.create(User.prototype);
