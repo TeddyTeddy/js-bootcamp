@@ -12,7 +12,7 @@ function runNotesEdit() {
     
     const init = function() {
         noteId = location.hash.substring(1)
-        notes = getSavedNotes()
+        notes = Engine.getSavedNotes()
         note = notes.find( note => note.id === noteId )
         
         // if note is not found, redirect to main page
@@ -24,7 +24,7 @@ function runNotesEdit() {
         noteTitleDOM.value = note.title
         noteBodyDOM.value = note.body
         // update the last edited text in ui
-        lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
+        lastEditedDOM.textContent = Engine.generatedLastEditedText(note.updatedAt)
     }
     
     init()
@@ -36,8 +36,8 @@ function runNotesEdit() {
         // update the updatedAt property for the note
         note.updatedAt = moment().valueOf()
         // update the last edited text in ui    
-        lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
-        saveNotes(notes) // to local storage
+        lastEditedDOM.textContent = Engine.generatedLastEditedText(note.updatedAt)
+        Engine.saveNotes(notes) // to local storage
     })
     
     // updating the note body functionality
@@ -47,15 +47,15 @@ function runNotesEdit() {
         // update the updatedAt property for the note
         note.updatedAt = moment().valueOf()
         // update the last edited text in ui
-        lastEditedDOM.textContent = generatedLastEditedText(note.updatedAt)
-        saveNotes(notes) // to local storage
+        lastEditedDOM.textContent = Engine.generatedLastEditedText(note.updatedAt)
+        Engine.saveNotes(notes) // to local storage
     })
     
     // removing the note functionality
     removeButtonDOM.addEventListener('click', e => {
         // remove the note from notes array
-        removeNote(notes, note.id)
-        saveNotes(notes) // to local storage
+        Engine.removeNote(notes, note.id)
+        Engine.saveNotes(notes) // to local storage
         // redirect to home page
         location.assign('index.html')
     })
