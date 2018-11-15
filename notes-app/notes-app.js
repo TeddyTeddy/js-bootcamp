@@ -25,7 +25,7 @@ function runNotesApp() {
             updatedAt: now
         })
         saveNotes(notes) // to local storage
-        location.assign(`/edit.html#${uuid}`)
+        location.assign(`notes-app/edit.html#${uuid}`)
     })
     
     // search text filtering functionality

@@ -17,7 +17,7 @@ function runNotesEdit() {
         
         // if note is not found, redirect to main page
         if(!note) {
-            location.assign('/index.html')
+            location.assign('index.html')
         }
         
         // note is found, show the note's contents in UI
@@ -57,7 +57,7 @@ function runNotesEdit() {
         removeNote(notes, note.id)
         saveNotes(notes) // to local storage
         // redirect to home page
-        location.assign('/index.html')
+        location.assign('index.html')
     })
     
     // listen for changes in local storage
